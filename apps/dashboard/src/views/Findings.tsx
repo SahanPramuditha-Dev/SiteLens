@@ -121,10 +121,10 @@ export const Findings = ({
             filtered.map((f, i) => (
               <div
                 key={i}
-                className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden flex flex-col"
+                className="bg-white border border-slate-200 rounded-xl shadow-sm flex flex-col"
               >
                 <div
-                  className={`px-5 py-4 border-b border-slate-100 flex justify-between items-start ${
+                  className={`px-5 py-4 border-b border-slate-100 flex justify-between items-start rounded-t-xl ${
                     f.status === 'potential_weakness'
                       ? 'bg-amber-50/30'
                       : f.status === 'protection_observed'

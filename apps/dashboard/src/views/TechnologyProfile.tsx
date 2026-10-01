@@ -116,8 +116,8 @@ export function TechnologyProfile({ assessment }: { assessment: Assessment }) {
   return (
     <div className="p-6 space-y-6 max-w-full">
       {/* Header card */}
-      <div className="bg-white border border-slate-200 rounded-xl overflow-hidden">
-        <div className="px-6 py-5 border-b border-slate-100 bg-slate-50/50">
+      <div className="bg-white border border-slate-200 rounded-xl">
+        <div className="px-6 py-5 border-b border-slate-100 bg-slate-50/50 rounded-t-xl">
           <div className="flex items-start justify-between gap-4 flex-wrap">
             <div>
               <h2 className="font-semibold text-slate-900">Technology Profile</h2>
@@ -154,7 +154,7 @@ export function TechnologyProfile({ assessment }: { assessment: Assessment }) {
         )}
 
         {/* Filters */}
-        <div className="px-6 py-4 flex flex-wrap gap-3">
+        <div className="px-6 py-4 flex flex-wrap gap-3 rounded-b-xl">
           <div className="relative flex-1 min-w-[200px]">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400" />
             <input
