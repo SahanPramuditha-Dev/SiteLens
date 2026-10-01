@@ -11,7 +11,7 @@ SiteLens is a Chromium Manifest V3 extension and local assessment workspace. It 
 <details open>
   <summary><strong>Dashboard View</strong></summary>
   <br>
-  <img src="screenshots/dashboard.png" alt="SiteLens Dashboard" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+  <img src="screenshots/dashboard_findings.png" alt="SiteLens Dashboard" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
 </details>
 
 <details open>
