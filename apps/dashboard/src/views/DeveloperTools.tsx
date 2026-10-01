@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import type { Assessment, ReportOptions } from '@sitelens/shared-types';
+import { Dropdown } from '../components/Dropdown';
 import {
   cspDraft,
   domainMap,
@@ -84,13 +85,14 @@ export function DeveloperTools({ assessment }: { assessment: Assessment }) {
       {tab === 'recipes' && (
         <section className="bg-white border border-slate-200 rounded-xl p-6 space-y-4">
           <h3 className="font-bold">Developer fix recipes</h3>
-          <select className={input} value={recipe} onChange={(e) => setRecipe(e.target.value)}>
-            {Object.entries(FIX_RECIPES).map(([id, r]) => (
-              <option key={id} value={id}>
-                {id} · {r.title}
-              </option>
-            ))}
-          </select>
+          <Dropdown
+            value={recipe}
+            onChange={setRecipe}
+            options={Object.entries(FIX_RECIPES).map(([id, r]) => ({
+              value: id,
+              label: `${id} · ${r.title}`,
+            }))}
+          />
           <p>{FIX_RECIPES[recipe].context}</p>
           {FIX_RECIPES[recipe].examples.map((e) => (
             <details key={e.platform}>
@@ -270,22 +272,18 @@ export function DeveloperTools({ assessment }: { assessment: Assessment }) {
               />
             </label>
           ))}
-          <label className="block">
-            Audience
-            <select
-              className={input}
+          <div className="block">
+            <p className="text-sm font-medium text-slate-600 mb-1.5">Audience</p>
+            <Dropdown
               value={options.audience || 'complete'}
-              onChange={(e) =>
-                setOptions({ ...options, audience: e.target.value as ReportOptions['audience'] })
-              }
-            >
-              <option value="complete">Complete assessment</option>
-              <option value="executive">
-                Executive: summary, scope, coverage, recommendations
-              </option>
-              <option value="developer">Developer: technical findings and evidence</option>
-            </select>
-          </label>
+              onChange={(v) => setOptions({ ...options, audience: v as ReportOptions['audience'] })}
+              options={[
+                { value: 'complete', label: 'Complete assessment' },
+                { value: 'executive', label: 'Executive: summary, scope, coverage, recommendations' },
+                { value: 'developer', label: 'Developer: technical findings and evidence' },
+              ]}
+            />
+          </div>
           <label className="block">
             Project logo (PNG/JPEG, max 200 KB)
             <input

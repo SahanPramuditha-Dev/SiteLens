@@ -2,6 +2,8 @@ import { useState } from 'react';
 import type { Assessment } from '@sitelens/shared-types';
 import { detailedChanges } from '@sitelens/assessment-engine/src/workspace.js';
 import { compareAssessments } from '@sitelens/extension/src/core/history';
+import { Dropdown } from '../components/Dropdown';
+
 export function ComparisonView({
   assessments,
   current,
@@ -29,20 +31,17 @@ export function ComparisonView({
     <div className="space-y-5">
       <section className="bg-white border border-slate-200 rounded-xl p-6 space-y-3">
         <h3 className="font-bold">Detailed assessment comparison</h3>
-        <label>
-          Baseline
-          <select
-            className="border rounded p-2 ml-3"
+        <div className="flex items-center gap-3 flex-wrap">
+          <span className="text-sm font-medium text-slate-600">Compare against:</span>
+          <Dropdown
             value={before.id}
-            onChange={(e) => setId(e.target.value)}
-          >
-            {candidates.map((a) => (
-              <option value={a.id} key={a.id}>
-                {a.createdAt} · {a.profile}
-              </option>
-            ))}
-          </select>
-        </label>
+            onChange={setId}
+            options={candidates.map((a) => ({
+              value: a.id,
+              label: `${new Date(a.createdAt).toLocaleString()} · ${a.profile}`,
+            }))}
+          />
+        </div>
         <p className="text-sm text-slate-500">
           Changes in captured evidence do not establish causality or exploitability. Rule-version
           changes are distinguished from website improvements. A missing item means it was not

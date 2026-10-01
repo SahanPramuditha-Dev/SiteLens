@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { TechnologyLogo } from '../components/TechnologyLogo';
+import { Dropdown } from '../components/Dropdown';
 import type { Assessment } from '@sitelens/shared-types';
 import { TECHNOLOGIES, FINGERPRINT_VERSION } from '@sitelens/technology-detector';
 import { Search, ChevronDown, ChevronUp, AlertTriangle, Info } from 'lucide-react';
@@ -164,26 +165,27 @@ export function TechnologyProfile({ assessment }: { assessment: Assessment }) {
               onChange={(e) => setQuery(e.target.value)}
             />
           </div>
-          <select
-            aria-label="Technology category"
-            className="px-3 py-2 text-sm border border-slate-200 rounded-lg bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-400"
+          <Dropdown
             value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          >
-            <option value="all">All categories</option>
-            {layers.map((l) => <option key={l}>{l}</option>)}
-          </select>
-          <select
-            aria-label="Detection confidence"
-            className="px-3 py-2 text-sm border border-slate-200 rounded-lg bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-400"
+            onChange={setCategory}
+            options={[
+              { value: 'all', label: 'All categories' },
+              ...layers.map((l) => ({ value: l, label: l })),
+            ]}
+          />
+          <Dropdown
             value={confidence}
-            onChange={(e) => setConfidence(e.target.value)}
-          >
-            <option value="all">All confidence levels</option>
-            {['high', 'medium', 'low'].map((c) => <option key={c} value={c}>{c.charAt(0).toUpperCase() + c.slice(1)}</option>)}
-          </select>
+            onChange={setConfidence}
+            options={[
+              { value: 'all', label: 'All confidence levels' },
+              { value: 'high', label: 'High' },
+              { value: 'medium', label: 'Medium' },
+              { value: 'low', label: 'Low' },
+            ]}
+          />
         </div>
       </div>
+
 
       {/* Summary map — only shown with no active filters */}
       {query === '' && category === 'all' && confidence === 'all' && technologies.length > 0 && (
