@@ -1,0 +1,13 @@
+version: 1
+rules:
+  SL-CSP-001:
+    required: true
+  SL-HEADER-002:
+    required: true
+  SL-FORM-002:
+    maxSeverity: medium
+# Add a matching JSON baseline when enabling this block:
+# regression:
+#   failOnNew: [high, critical]
+thirdPartyDomains:
+  allow: []

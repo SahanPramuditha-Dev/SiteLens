@@ -1,0 +1,21 @@
+# SiteLens privacy and security boundaries
+
+Passive extension inspection reads the chosen top-level document, permitted response-header metadata and optional cookie attributes. It does not reload the website, submit forms, execute attack payloads, read private files or upload assessments. Normal site JavaScript continues running in its own browser context.
+
+Host access is optional per site. Permission alone does not enable global browsing observation: a site must also be selected for observation, and configured exclusions are applied before inspection and permitted response collection. Session response records are bound to document/navigation identities. Cookie attributes are queried only for the chosen URL in its matching cookie store/partition. Cookie values and storage contents are omitted.
+
+Inline JavaScript is processed transiently for bounded AST and secret-pattern analysis. Complete source and secret values are excluded from persisted assessment evidence. URLs omit credentials, query strings and fragments. Secret detection is heuristic; public configuration is distinguished from potential credentials and no credential is tested for validity.
+
+Supplemental source-map requests are a separate opt-in operation. They require a recorded authorization checkbox, explicit allowed origins/domains and paths, exclusion checks on redirect destinations, omitted credentials, request/byte/time limits and rate limiting. Accessibility does not imply sensitivity. Source content is processed transiently; only source names and redacted secret metadata remain.
+
+CLI scans create a separate unauthenticated browser session and make normal navigation/resource requests. Scope blocks disallowed targets and resources; a separate 100-request navigation cap applies. Supplemental request limits do not claim to throttle a website's own browser traffic.
+
+Reports escape untrusted evidence, use a restrictive content policy, and contain no remote scripts. Assessments and lifecycle history remain local. Optional browser permission revocation, per-record deletion and bounded retention are supported. There is no telemetry or sync service.
+
+Selective external bundle inspection is explicit supplemental work. Each redirect is checked against the authorized scope, third-party opt-in and granted origin permissions before a request. Requests omit credentials and use a shared bounded batch budget, rate limit, timeout and streamed byte cap. HTML and other non-script responses are rejected. Bundle source is transient; a new assessment retains redacted static-analysis metadata, individual locations and provenance. Original evidence is preserved. A supplemental record combines different collection times and is labelled historical rather than current.
+
+Backup restore validates bounded record shapes and evidence references, rejects known raw source/value fields and unsafe property names, redacts URLs, deduplicates identities and preserves local permissions/settings. Compatible schema-1 migrations retain an explicit limitation; other versions fail. Imports are never treated as live observations. Free-form imported text still needs review before sharing. Report logos accept bounded PNG/JPEG data only. The CSP assistant creates a draft and has no deployment capability.
+
+Limitations are part of every finding and the coverage view. No result establishes backend/database security, authorization correctness, business-logic safety, complete TLS configuration or absence of vulnerabilities. A verified improvement pertains only to the selected passive check with newer matching evidence.
+
+Technology profiling runs locally using a versioned SiteLens catalog. It adds no network lookup, arbitrary page-script execution or global-property getter access. Bounded generator metadata is processed transiently into named/versioned fingerprints; complete tag contents are omitted. Cookie-name clues are low confidence and cookie values remain redacted. Resource/header/DOM evidence, detection confidence and version confidence are retained separately. Framework relationships are labelled inferred, header/meta versions are self-reported and asset-path versions are tentative. Conflicting version signals cannot become an exact-version advisory match. Vendor host fingerprints use exact hostname boundaries rather than substring matches.

@@ -1,0 +1,1 @@
+{"extends":"./tsconfig.base.json","compilerOptions":{"noEmit":true,"lib":["ES2022","DOM","DOM.Iterable"],"jsx":"react-jsx","types":["chrome","node"],"allowImportingTsExtensions":true},"include":["packages/*/src/**/*.ts","apps/extension/src/**/*.ts","apps/dashboard/src/**/*.ts","apps/dashboard/src/**/*.tsx","apps/cli/src/**/*.ts"]}

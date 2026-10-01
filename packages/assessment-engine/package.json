@@ -1,0 +1,17 @@
+{
+  "name": "@sitelens/assessment-engine",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@sitelens/technology-detector": "^1.0.0",
+    "@sitelens/evidence-engine": "^1.0.0",
+    "@sitelens/finding-engine": "^1.0.0",
+    "@sitelens/rule-definitions": "^1.0.0",
+    "@sitelens/shared-types": "^1.0.0"
+  }
+}

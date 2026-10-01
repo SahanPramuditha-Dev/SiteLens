@@ -1,0 +1,8 @@
+node_modules/
+dist/
+test-results/
+playwright-report/
+.browser-profile/
+*.log
+.test-build/
+release/

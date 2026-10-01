@@ -1,0 +1,11 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {assess,redactUrl,redactHeader} from '../engine.js';
+const page={url:'https://example.com/?token=secret',resources:[],forms:[],indicators:[],metaCsp:[]};
+test('CSP nonces and reporting URL secrets are redacted',()=>{const value=redactHeader("script-src 'nonce-secret'; report-uri https://example.com/report?key=secret");assert.ok(!value.includes('nonce-secret'));assert.ok(!value.includes('key=secret'));});
+test('unavailable headers never become missing-header warnings',()=>{const a=assess(page,null);assert.equal(a.findings.filter(f=>f.status==='unable_to_assess').length,6);assert.equal(a.checksTotal,a.findings.length);});
+test('redacts URL credentials, query and fragment',()=>{assert.equal(redactUrl('https://user:secret@example.com/a?token=secret#secret'),'https://example.com/a?REDACTED');assert.ok(!JSON.stringify(assess(page,null)).includes('token=secret'));});
+test('CSP meta presence is accounted for without network evidence',()=>{const a=assess({...page,metaCsp:["default-src 'self'"]},null);assert.equal(a.findings.find(f=>f.checkId==='SL-CSP-001').status,'protection_observed');});
+test('invalid nosniff and zero-age HSTS do not count as protections',()=>{const a=assess(page,{headers:{'x-content-type-options':'invalid','strict-transport-security':'max-age=0'},collectedAt:'2026-10-01'});for(const id of ['SL-HEADER-001','SL-HEADER-002'])assert.equal(a.findings.find(f=>f.checkId===id).status,'potential_weakness');});
+test('CSP frame-ancestors accounts for framing alternative',()=>{const a=assess(page,{headers:{'content-security-policy':"default-src 'self'; frame-ancestors 'none'"},collectedAt:'2026-10-01'});assert.equal(a.findings.find(f=>f.checkId==='SL-HEADER-004').status,'protection_observed');});
+test('resource and form evidence redact sensitive URLs',()=>{const a=assess({...page,resources:[{url:'http://cdn.example.com/a.js?secret=yes',type:'script'}],forms:[{action:'http://example.com/login?token=hidden',password:true}]},null);assert.ok(!JSON.stringify(a).includes('secret=yes'));assert.ok(!JSON.stringify(a).includes('token=hidden'));assert.equal(a.findings.find(f=>f.checkId==='SL-FORM-001').severity,'high');});

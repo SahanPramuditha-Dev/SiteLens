@@ -1,0 +1,13 @@
+{
+  "name": "@sitelens/rule-definitions",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@sitelens/shared-types": "^1.0.0"
+  }
+}

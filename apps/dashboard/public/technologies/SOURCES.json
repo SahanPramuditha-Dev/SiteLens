@@ -1,0 +1,506 @@
+{
+  "generatedAt": "2026-10-01",
+  "simpleIcons": "16.33.0",
+  "iconifyLogos": 1790606179,
+  "logos": [
+    {
+      "technology": "ASP.NET",
+      "file": "aspnet.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:dotnet)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "AWS CloudFront",
+      "file": "awscloudfront.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:aws-cloudfront)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Adobe Fonts",
+      "file": "adobefonts.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:adobe-icon)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Alpine.js",
+      "file": "alpinejs.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:alpinejs-icon)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Amplitude",
+      "file": "amplitude.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:amplitude-icon)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Angular",
+      "file": "angular.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:angular-icon)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Apache",
+      "file": "apache.svg",
+      "source": "https://www.apache.org/foundation/press/kit",
+      "license": "Apache-2.0"
+    },
+    {
+      "technology": "Astro",
+      "file": "astro.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:astro-icon)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Axios",
+      "file": "axios.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:axios)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Bootstrap",
+      "file": "bootstrap.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:bootstrap)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Chart.js",
+      "file": "chartjs.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:chartjs)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Cloudflare",
+      "file": "cloudflare.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:cloudflare-icon)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Cloudflare Browser Insights",
+      "file": "cloudflarebrowserinsights.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:cloudflare-icon)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Cloudflare Turnstile",
+      "file": "cloudflareturnstile.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:cloudflare-icon)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Crisp",
+      "file": "crisp.png",
+      "source": "https://crisp.chat/favicons/favicon-128x128.png",
+      "license": "Vendor trademark asset; unmodified identifying logo"
+    },
+    {
+      "technology": "D3.js",
+      "file": "d3js.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:d3)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Datadog",
+      "file": "datadog.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:datadog-icon)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Django",
+      "file": "django.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:django-icon)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Docusaurus",
+      "file": "docusaurus.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:docusaurus)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Drupal",
+      "file": "drupal.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:drupal-icon)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Express",
+      "file": "express.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:express)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Fastly",
+      "file": "fastly.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:fastly)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Firebase",
+      "file": "firebase.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:firebase-icon)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Framer Motion",
+      "file": "framermotion.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:framer)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "GSAP",
+      "file": "gsap.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:gsap)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Gatsby",
+      "file": "gatsby.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:gatsby)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Ghost",
+      "file": "ghost.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:ghost)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Google Analytics",
+      "file": "googleanalytics.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:google-analytics)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Google Fonts",
+      "file": "googlefonts.svg",
+      "source": "https://fonts.google.com",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Google Tag Manager",
+      "file": "googletagmanager.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:google-tag-manager)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Google reCAPTCHA",
+      "file": "googlerecaptcha.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:recaptcha)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "HTMX",
+      "file": "htmx.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:htmx-icon)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Hotjar",
+      "file": "hotjar.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:hotjar-icon)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "HubSpot",
+      "file": "hubspot.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:hubspot)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Hugo",
+      "file": "hugo.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:hugo)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Intercom",
+      "file": "intercom.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:intercom-icon)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Jekyll",
+      "file": "jekyll.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:jekyll)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Joomla",
+      "file": "joomla.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:joomla)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Laravel",
+      "file": "laravel.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:laravel)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Lenis",
+      "file": "lenis.png",
+      "source": "https://lenis.darkroom.engineering/apple-touch-icon.png",
+      "license": "Vendor trademark asset; unmodified identifying logo"
+    },
+    {
+      "technology": "LiteSpeed",
+      "file": "litespeed.png",
+      "source": "https://www.litespeedtech.com/images/logos/liteSpeed_logo_icon.png",
+      "license": "Vendor trademark asset; unmodified identifying logo"
+    },
+    {
+      "technology": "Lodash",
+      "file": "lodash.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:lodash)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Lucide",
+      "file": "lucide.svg",
+      "source": "https://lucide.dev",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Magento",
+      "file": "magento.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:magento)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Matomo",
+      "file": "matomo.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:matomo-icon)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Microsoft Clarity",
+      "file": "microsoftclarity.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:microsoft-icon)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Microsoft IIS",
+      "file": "microsoftiis.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:microsoft-icon)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Mixpanel",
+      "file": "mixpanel.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:mixpanel)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Netlify",
+      "file": "netlify.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:netlify-icon)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "New Relic",
+      "file": "newrelic.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:new-relic-icon)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Next.js",
+      "file": "nextjs.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:nextjs-icon)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Nginx",
+      "file": "nginx.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:nginx)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Nuxt.js",
+      "file": "nuxtjs.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:nuxt-icon)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "PHP",
+      "file": "php.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:php)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "PayPal",
+      "file": "paypal.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:paypal)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Plausible",
+      "file": "plausible.svg",
+      "source": "https://github.com/plausible/docs/blob/be5c935484e075f1e0caf3c9b3351ddd62348139/static/img/logo.svg",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "PostHog",
+      "file": "posthog.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:posthog-icon)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "React",
+      "file": "react.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:react)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "React Router",
+      "file": "reactrouter.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:react-router)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "React Three Drei",
+      "file": "reactthreedrei.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:threejs)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "React Three Fiber",
+      "file": "reactthreefiber.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:react)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Segment",
+      "file": "segment.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:segment-icon)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Sentry",
+      "file": "sentry.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:sentry-icon)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Shopify",
+      "file": "shopify.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:shopify)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Squarespace",
+      "file": "squarespace.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:squarespace)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Stripe",
+      "file": "stripe.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:stripe)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Svelte",
+      "file": "svelte.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:svelte-icon)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Tailwind CSS",
+      "file": "tailwindcss.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:tailwindcss-icon)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Tawk.to",
+      "file": "tawkto.png",
+      "source": "https://www.tawk.to/tawk-logo.png",
+      "license": "Vendor trademark asset; unmodified identifying logo"
+    },
+    {
+      "technology": "Three.js",
+      "file": "threejs.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:threejs)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "UNPKG",
+      "file": "unpkg.svg",
+      "source": "https://github.com/mjackson/unpkg/blob/af8c8db00fdacd77961ab2a8c3edb45a27d3a6a3/public/favicon.ico",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Vercel",
+      "file": "vercel.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:vercel-icon)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Vite",
+      "file": "vite.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:vite-icon)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Vue.js",
+      "file": "vuejs.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:vue)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Webflow",
+      "file": "webflow.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:webflow)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Wix",
+      "file": "wix.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:wix)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "WooCommerce",
+      "file": "woocommerce.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:woocommerce-icon)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "WordPress",
+      "file": "wordpress.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:wordpress-icon)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "Zendesk",
+      "file": "zendesk.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:zendesk-icon)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "cdnjs",
+      "file": "cdnjs.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:cloudflare-icon)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "hCaptcha",
+      "file": "hcaptcha.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:hcaptcha-icon)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "jQuery",
+      "file": "jquery.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:jquery)",
+      "license": "CC0-1.0"
+    },
+    {
+      "technology": "jsDelivr",
+      "file": "jsdelivr.svg",
+      "source": "https://github.com/gilbarbara/logos (Iconify logos:jsdelivr)",
+      "license": "CC0-1.0"
+    }
+  ],
+  "missing": []
+}

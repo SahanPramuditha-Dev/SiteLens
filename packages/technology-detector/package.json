@@ -1,0 +1,14 @@
+{
+  "name": "@sitelens/technology-detector",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@sitelens/shared-types": "^1.0.0",
+    "@sitelens/rule-definitions": "^1.0.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "name": "@sitelens/extension",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "node scripts/test.mjs",
+    "check": "npm run typecheck && npm run build && node scripts/check.mjs",
+    "package": "cd ../.. && node scripts/package.mjs",
+    "icons": "node scripts/icons.mjs"
+  },
+  "dependencies": {
+    "@sitelens/assessment-engine": "^1.0.0",
+    "@sitelens/rule-definitions": "^1.0.0",
+    "@sitelens/shared-types": "^1.0.0"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "@sitelens/cli",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "sitelens": "./dist/index.js"
+  },
+  "dependencies": {
+    "@sitelens/assessment-engine": "*",
+    "@sitelens/rule-definitions": "*",
+    "playwright": "^1.63.0"
+  }
+}
