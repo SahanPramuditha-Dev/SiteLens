@@ -296,6 +296,13 @@ async function collectCookies(
   }
 }
 const inspectionLocks = new Set<number>();
+function withTimeout<T>(promise: Promise<T>, ms: number, msg: string): Promise<T> {
+  return Promise.race([
+    promise,
+    new Promise<T>((_, reject) => setTimeout(() => reject(new Error(msg)), ms)),
+  ]);
+}
+
 async function inspect(
   tabId: number,
   baselineId?: string,
@@ -321,18 +328,26 @@ async function inspect(
       throw new Error('This document is outside the configured scope or in an excluded path.');
     const initial = await chrome.webNavigation.getFrame({ tabId, frameId: 0 });
     if (!initial?.documentId) throw new Error('Wait for the page to finish loading.');
-    const results = await chrome.scripting.executeScript({
-      target: { tabId, documentIds: [initial.documentId] },
-      func: collectPage,
-    });
+    const results = await withTimeout(
+      chrome.scripting.executeScript({
+        target: { tabId, documentIds: [initial.documentId] },
+        func: collectPage,
+      }),
+      10000,
+      'Script injection timed out. The page might be stuck loading.'
+    );
     const page = results[0]?.result;
     if (!page) throw new Error('Page collection failed.');
     try {
-      const result = await chrome.scripting.executeScript({
-        target: { tabId, documentIds: [initial.documentId] },
-        world: 'MAIN',
-        func: collectRuntimeTechnologies,
-      });
+      const result = await withTimeout(
+        chrome.scripting.executeScript({
+          target: { tabId, documentIds: [initial.documentId] },
+          world: 'MAIN',
+          func: collectRuntimeTechnologies,
+        }),
+        5000,
+        'Runtime script injection timed out.'
+      );
       const runtime = result[0]?.result;
       if (
         runtime &&
@@ -359,7 +374,7 @@ async function inspect(
       throw new Error(
         'The website URL changed or its baseline was deleted. Inspect the current target again.'
       );
-    await tabQueues.get(tabId);
+    await withTimeout(tabQueues.get(tabId) || Promise.resolve(), 5000, 'Network idle timeout.');
     const nav = await readNav(tabId);
     const response =
       nav?.documentId === initial.documentId && nav.response?.urlHash === targetKey
