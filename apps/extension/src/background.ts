@@ -456,28 +456,52 @@ chrome.runtime.onMessage.addListener((message, sender, reply) => {
         const state = await getState();
         const a = state.assessments.find((a) => a.id === message.assessmentId);
         if (!a) throw new Error('Assessment unavailable.');
+        // Try session binding first, then local storage fallback
         const bindingKey = 'binding_' + a.id;
-        // Session storage is wiped on extension reload — fall back to local storage
         let binding = (await chrome.storage.session.get(bindingKey))[bindingKey] as
           { tabId: number; documentId: string } | undefined;
         if (!binding) {
           binding = (await chrome.storage.local.get(bindingKey))[bindingKey] as
             { tabId: number; documentId: string } | undefined;
-          // Restore it to session so future checks are fast
           if (binding) await chrome.storage.session.set({ [bindingKey]: binding });
         }
         let documentId: string | undefined, target: string | undefined;
-        try {
-          if (binding) {
+        // If no stored binding, try to find a matching open tab by URL
+        if (!binding) {
+          try {
+            const tabs = await chrome.tabs.query({});
+            for (const tab of tabs) {
+              if (!tab.url || !tab.id) continue;
+              try {
+                const tabHash = await hashUrl(tab.url);
+                if (tabHash === a.targetKey) {
+                  target = tabHash;
+                  try {
+                    const frame = await chrome.webNavigation.getFrame({ tabId: tab.id, frameId: 0 });
+                    documentId = frame?.documentId;
+                    // Restore binding for future calls
+                    if (documentId) {
+                      const restored = { tabId: tab.id, documentId };
+                      await chrome.storage.session.set({ [bindingKey]: restored });
+                      await chrome.storage.local.set({ [bindingKey]: restored });
+                    }
+                  } catch {}
+                  break;
+                }
+              } catch {}
+            }
+          } catch {}
+        } else {
+          try {
             const tab = await chrome.tabs.get(binding.tabId);
             try { target = await hashUrl(tab.url || ''); } catch {}
             try {
               documentId = (await chrome.webNavigation.getFrame({ tabId: binding.tabId, frameId: 0 }))?.documentId;
             } catch {}
-          }
-        } catch {}
+          } catch {}
+        }
         return {
-          status: a.importedAt ? 'older assessment' : freshness(a, binding, documentId, target),
+          status: a.importedAt ? 'older assessment' : freshness(a, binding || (target ? { tabId: -1, documentId: documentId || '' } : undefined), documentId, target),
           collectedAt: a.evidence.find((e) => e.type === 'document')?.collectedAt || a.createdAt,
         };
       }
