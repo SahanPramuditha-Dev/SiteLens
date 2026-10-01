@@ -1,14 +1,34 @@
-# SiteLens
+# SiteLens 🔍
 
-SiteLens is an evidence-first Chromium Manifest V3 extension and local assessment workspace. It records browser-visible observations, confidence, evidence provenance, coverage and limitations. It never produces a security score or certifies an application as secure.
+> Evidence-first, passive website security inspector & local assessment workspace for Chromium.
 
-## Install the built extension
+SiteLens is a Chromium Manifest V3 extension and local assessment workspace. It records browser-visible observations, confidence, evidence provenance, coverage, and limitations. **It never produces a security score or certifies an application as secure.**
+
+---
+
+## 📸 Screenshots
+
+<details open>
+  <summary><strong>Dashboard View</strong></summary>
+  <br>
+  <img src="screenshots/dashboard.png" alt="SiteLens Dashboard" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+</details>
+
+<details open>
+  <summary><strong>Extension Popup</strong></summary>
+  <br>
+  <img src="screenshots/popup.png" width="350" alt="SiteLens Popup" style="border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+</details>
+
+---
+
+## 🚀 Installation (Built Extension)
 
 The ready-to-load extension is **apps/extension/dist**. Open `chrome://extensions` or `edge://extensions`, enable Developer mode, choose **Load unpacked**, and select that directory. Do not select the repository root.
 
 Open a website, click SiteLens, and choose **Inspect this website**. Header observation requires optional access to that site. Grant it, reload the website once, then inspect again. A response that was not captured is marked unavailable rather than interpreted as missing headers. Cookie inspection has a separate optional permission and checkbox. Values are omitted.
 
-## Included
+## ✨ Features
 
 - 58 stable, documented checks with status, severity, confidence, recommendations and explicit limitations.
 - Evidence Explorer, provenance, assessment coverage, security headers/CSP, cookie attributes, resources, forms, frames and technology indicators.
@@ -28,7 +48,7 @@ Open a website, click SiteLens, and choose **Inspect this website**. Header obse
 - Validated, deduplicated backup restore, compatible schema-1 migration, storage usage, assessor/organization/project labels, a local PNG/JPEG report logo, selected observations and executive/developer report audiences.
 - Optional supplied advisory datasets using exact semantic-version ranges. Unknown/inferred versions are excluded; runtime applicability remains unknown.
 
-## Build and checks
+## 🛠️ Build and Development
 
 Use Node 22 or newer and npm:
 
@@ -50,7 +70,7 @@ npm run test:browser
 
 The UI test uses generated assessment fixtures; the CLI test navigates only a local fixture. On Windows, UI and CLI fixture tests use installed Chrome, while live extension tests use installed Edge; set `SITELENS_TEST_BROWSER` to another compatible browser executable. Extension integration tests require a Chromium build that supports loading unpacked extensions through launch flags. All ten live extension tests passed in Edge. See `docs/VALIDATION.md` for detailed results and browser test-launch limitations.
 
-## CLI
+## 💻 Command Line Interface (CLI)
 
 ```text
 node apps/cli/dist/index.js --help
@@ -63,7 +83,7 @@ node apps/cli/dist/index.js export assessment/assessment.json --format sarif --o
 
 Use `--browser "C:\Program Files\Google\Chrome\Application\chrome.exe"` if the downloaded Playwright browser is unavailable. `--scope` accepts a scope JSON file; `--baseline` a matching assessment; `--advisories` a locally supplied dated advisory array. Scan opens a fresh unauthenticated browser session and sends normal page/resource requests within allowed scope (maximum 100). It does not perform attack testing. Third-party resources are blocked unless explicitly allowed in scope. Exit codes: 0 completed/policy passed, 1 error, 2 policy failed. JSON, HTML, SARIF and JUnit files are generated together.
 
-## Architecture and privacy
+## 🔒 Architecture & Privacy
 
 `apps/extension` contains collection, background coordination, persistence, popup and reports. `apps/dashboard` is the React workspace. `apps/cli` is the browser-backed CLI. Shared packages separate models, rules, evidence, findings, assessment and reporting. Collection and evaluation remain separate.
 
@@ -71,7 +91,7 @@ Assessments use schema version 2 plus engine, rule-set and per-check versions, r
 
 The Secrets & Configuration view shows full token/API-key values read from the original live document when they match the stored finding fingerprint. Complete values remain transient: history, reports and exports stay redacted. Reinspect after a reload or navigation; old records cannot recover values that were never saved.
 
-## Deliberate limits
+## ⚠️ Deliberate Limits
 
 Technology detection uses SiteLens's own bounded fingerprint catalog, not Wappalyzer's API or commercial database. No technology lookup leaves the device. Only chosen DOM markers, a bounded generator tag, loaded-resource URLs, permitted captured headers and cookie names are inspected; arbitrary runtime globals/getters are not read. Generator/header versions are explicit declarations, asset-path versions are tentative, and conflicting versions remain ambiguous. Shared cookie names have low detection confidence. Backend/database architecture remains unknown without a supporting browser-visible clue. Fingerprints can be imitated or absent; “not detected” does not establish absence.
 
