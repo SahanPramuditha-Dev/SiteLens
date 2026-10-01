@@ -547,54 +547,50 @@ export const Overview = ({ assessment, allAssessments, setView }: Props) => {
       {/* ── 7. Detected Technologies ────────────────────────────────── */}
       {assessment.technologies.length > 0 && (
         <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-          <div className="px-5 py-4 border-b border-slate-100 bg-slate-50/50">
+          <div className="px-5 py-4 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
             <h3 className="text-sm font-bold text-slate-700 uppercase tracking-wider">
               Detected Technologies
             </h3>
+            <span className="text-xs text-slate-400">{assessment.technologies.length} detected</span>
           </div>
-          <div className="p-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="p-5 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
             {assessment.technologies.map((t, i) => (
               <div
                 key={i}
-                className="flex flex-col p-4 bg-slate-50 rounded-lg border border-slate-100 gap-2"
+                className="flex items-center gap-2.5 px-3 py-2.5 bg-slate-50 rounded-lg border border-slate-100 hover:border-slate-200 transition-colors"
               >
-                <div className="flex items-start justify-between gap-2">
-                  <strong className="text-slate-800 font-semibold text-sm flex items-center gap-2">
-                    <TechnologyLogo name={t.name} size={22} />
-                    {t.name}
-                  </strong>
-                  <span
-                    className={`text-[10px] px-1.5 py-0.5 rounded font-semibold uppercase ${
-                      t.confidence === 'high'
-                        ? 'bg-emerald-100 text-emerald-700'
-                        : t.confidence === 'medium'
-                          ? 'bg-amber-100 text-amber-700'
-                          : 'bg-slate-100 text-slate-500'
-                    }`}
-                  >
-                    {t.confidence}
-                  </span>
-                </div>
-                <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400">
-                  {t.layer}
+                <span className="shrink-0">
+                  <TechnologyLogo name={t.name} size={20} />
                 </span>
-                <div className="grid grid-cols-2 gap-x-3 gap-y-1 text-[11px] text-slate-500 border-t border-slate-200 pt-2 mt-1">
-                  <span className="font-semibold text-slate-400">Version</span>
-                  <span>
-                    {t.version && t.version !== 'Unknown' ? (
-                      t.version
-                    ) : (
-                      <span className="text-slate-300">Not detected</span>
-                    )}
-                  </span>
-                  <span className="font-semibold text-slate-400">Detection</span>
-                  <span className="capitalize">{t.observation || '–'}</span>
+                <div className="min-w-0">
+                  <p className="text-sm font-medium text-slate-800 truncate">{t.name}</p>
+                  <p className="text-[10px] text-slate-400 uppercase tracking-wider truncate">{t.layer}</p>
                 </div>
+                <span
+                  className={`ml-auto shrink-0 text-[9px] px-1 py-0.5 rounded font-bold uppercase ${
+                    t.confidence === 'high'
+                      ? 'bg-emerald-100 text-emerald-700'
+                      : t.confidence === 'medium'
+                        ? 'bg-amber-100 text-amber-700'
+                        : 'bg-slate-100 text-slate-500'
+                  }`}
+                >
+                  {t.confidence[0]}
+                </span>
               </div>
             ))}
           </div>
+          <div className="px-5 pb-4">
+            <button
+              onClick={() => setView('technologies')}
+              className="text-xs text-emerald-600 hover:underline flex items-center gap-1"
+            >
+              View full technology profile <ArrowRight className="h-3 w-3" />
+            </button>
+          </div>
         </div>
       )}
+
 
       {/* ── 9. Assessment Limitations ───────────────────────────────── */}
       <div className="bg-slate-50 rounded-xl border border-slate-200 px-5 py-4 flex items-start gap-3">
