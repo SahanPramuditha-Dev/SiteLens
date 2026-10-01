@@ -233,15 +233,25 @@ const App = () => {
             >
               <Download className="h-4 w-4" /> Export JSON
             </button>
-            <label className="flex items-center gap-2 text-sm font-medium text-slate-600 ml-4 cursor-pointer">
-              <input
-                type="checkbox"
-                className="rounded text-emerald-600 focus:ring-emerald-500"
-                checked={isProfessionalMode}
-                onChange={(e) => setIsProfessionalMode(e.target.checked)}
-              />
-              Professional Mode
-            </label>
+            <div className="flex items-center gap-2.5 pl-2 ml-1 border-l border-slate-200">
+              <button
+                role="switch"
+                aria-checked={isProfessionalMode}
+                aria-label="Professional Mode"
+                onClick={() => setIsProfessionalMode(!isProfessionalMode)}
+                className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-1 ${isProfessionalMode ? 'bg-emerald-500' : 'bg-slate-200'}`}
+              >
+                <span
+                  className={`inline-block h-3.5 w-3.5 transform rounded-full bg-white shadow transition-transform duration-200 ${isProfessionalMode ? 'translate-x-[18px]' : 'translate-x-[3px]'}`}
+                />
+              </button>
+              <span
+                className={`text-sm font-medium cursor-pointer select-none transition-colors ${isProfessionalMode ? 'text-emerald-700' : 'text-slate-500'}`}
+                onClick={() => setIsProfessionalMode(!isProfessionalMode)}
+              >
+                Professional Mode
+              </span>
+            </div>
           </div>
         </header>
 
@@ -287,3 +297,4 @@ const App = () => {
 };
 
 export default App;
+
