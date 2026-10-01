@@ -412,9 +412,11 @@ async function inspect(
     else if (checkId && assessment.findings[0].lifecycle === 'verified')
       assessment.findings[0].lifecycle = 'needs verification';
     await saveAssessment(assessment);
-    await chrome.storage.session.set({
-      ['binding_' + assessment.id]: { tabId, documentId: initial.documentId },
-    });
+    const bindingKey = 'binding_' + assessment.id;
+    const bindingValue = { tabId, documentId: initial.documentId };
+    await chrome.storage.session.set({ [bindingKey]: bindingValue });
+    // Also persist to local so it survives extension reloads (session storage is wiped on reload)
+    await chrome.storage.local.set({ [bindingKey]: bindingValue });
     if (verification && checkId)
       await setLifecycle(
         assessment.id,
@@ -445,24 +447,33 @@ chrome.runtime.onMessage.addListener((message, sender, reply) => {
         return inspect(binding?.tabId ?? -1, message.assessmentId, message.checkId);
       }
       case 'reinspect': {
-        const binding = (await chrome.storage.session.get('binding_' + message.assessmentId))[
-          'binding_' + message.assessmentId
-        ] as { tabId: number } | undefined;
-        return inspect(binding?.tabId ?? -1);
+        const bKey = 'binding_' + message.assessmentId;
+        let bnd = (await chrome.storage.session.get(bKey))[bKey] as { tabId: number } | undefined;
+        if (!bnd) bnd = (await chrome.storage.local.get(bKey))[bKey] as { tabId: number } | undefined;
+        return inspect(bnd?.tabId ?? -1);
       }
       case 'freshness': {
         const state = await getState();
         const a = state.assessments.find((a) => a.id === message.assessmentId);
         if (!a) throw new Error('Assessment unavailable.');
-        const binding = (await chrome.storage.session.get('binding_' + a.id))['binding_' + a.id] as
+        const bindingKey = 'binding_' + a.id;
+        // Session storage is wiped on extension reload — fall back to local storage
+        let binding = (await chrome.storage.session.get(bindingKey))[bindingKey] as
           { tabId: number; documentId: string } | undefined;
+        if (!binding) {
+          binding = (await chrome.storage.local.get(bindingKey))[bindingKey] as
+            { tabId: number; documentId: string } | undefined;
+          // Restore it to session so future checks are fast
+          if (binding) await chrome.storage.session.set({ [bindingKey]: binding });
+        }
         let documentId: string | undefined, target: string | undefined;
         try {
           if (binding) {
             const tab = await chrome.tabs.get(binding.tabId);
-            documentId = (await chrome.webNavigation.getFrame({ tabId: binding.tabId, frameId: 0 }))
-              ?.documentId;
-            target = await hashUrl(tab.url || '');
+            try { target = await hashUrl(tab.url || ''); } catch {}
+            try {
+              documentId = (await chrome.webNavigation.getFrame({ tabId: binding.tabId, frameId: 0 }))?.documentId;
+            } catch {}
           }
         } catch {}
         return {
