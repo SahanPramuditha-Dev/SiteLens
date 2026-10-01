@@ -4,7 +4,7 @@ import { FreshnessIndicator } from './components/Freshness';
 import { CoverageView } from './views/Coverage';
 declare var chrome: any;
 import { useEffect, useState } from 'react';
-import { Shield, ShieldAlert, Zap, FileSearch, Download, RefreshCw } from 'lucide-react';
+import { Menu, ChevronLeft, Shield, ShieldAlert, Zap, FileSearch, Download, RefreshCw } from 'lucide-react';
 import type { Assessment, LifecycleEvent } from '@sitelens/shared-types';
 import { Overview } from './views/Overview';
 import { HistoryView } from './views/History';
@@ -56,6 +56,7 @@ const App = () => {
   });
   const [currentId, setCurrentId] = useState<string>('');
   const [view, setView] = useState('overview');
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   useEffect(() => {
     if (typeof chrome !== 'undefined' && chrome.runtime?.sendMessage) {
@@ -115,16 +116,27 @@ const App = () => {
 
   return (
     <div className="flex flex-col md:flex-row h-screen bg-slate-50 text-slate-900 font-sans overflow-hidden">
-      <aside className="w-full md:w-64 h-48 md:h-auto shrink-0 bg-white border-r border-slate-200 flex flex-col">
-        <div className="p-6 border-b border-slate-100 flex items-center gap-3">
-          <h1>
-            <img src="./brand/logo.svg" alt="SiteLens" width="194" height="50" />
-          </h1>
+      <aside className={`h-48 md:h-auto shrink-0 bg-white border-r border-slate-200 flex flex-col transition-all duration-300 ${isSidebarCollapsed ? 'w-20' : 'w-full md:w-64'}`}>
+        <div className={`p-4 border-b border-slate-100 flex items-center ${isSidebarCollapsed ? 'justify-center' : 'justify-between'}`}>
+          {!isSidebarCollapsed && (
+            <h1>
+              <img src="./brand/logo.svg" alt="SiteLens" width="150" height="38" />
+            </h1>
+          )}
+          <button 
+            onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+            className="p-1.5 rounded-md text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
+            title={isSidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+          >
+            {isSidebarCollapsed ? <Menu className="w-5 h-5" /> : <ChevronLeft className="w-5 h-5" />}
+          </button>
         </div>
-        <div className="p-4 flex-1 overflow-y-auto space-y-1">
-          <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 ml-3 mt-4">
-            Workspace
-          </p>
+        <div className="p-3 flex-1 overflow-y-auto space-y-1 overflow-x-hidden">
+          {!isSidebarCollapsed && (
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2 ml-3 mt-2">
+              Workspace
+            </p>
+          )}
           {[
             { id: 'overview', label: 'Overview', icon: Zap },
             { id: 'tools', label: 'Developer Tools', icon: FileSearch },
@@ -149,12 +161,15 @@ const App = () => {
             <button
               key={nav.id}
               onClick={() => setView(nav.id)}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-colors ${view === nav.id ? 'bg-emerald-50 text-emerald-700' : 'text-slate-600 hover:bg-slate-100'}`}
+              title={isSidebarCollapsed ? nav.label : undefined}
+              className={`w-full flex items-center ${isSidebarCollapsed ? 'justify-center p-3' : 'gap-3 px-3 py-2.5'} rounded-md text-sm font-medium transition-colors ${view === nav.id ? 'bg-emerald-50 text-emerald-700' : 'text-slate-600 hover:bg-slate-100'}`}
             >
-              <nav.icon className="h-4 w-4" />
-              {nav.label}
-              {(nav.count ?? 0) > 0 && (
-                <span className="ml-auto bg-amber-100 text-amber-800 py-0.5 px-2 rounded-full text-xs">
+              <nav.icon className="h-[18px] w-[18px] shrink-0" />
+              {!isSidebarCollapsed && (
+                <span className="text-left whitespace-normal leading-tight">{nav.label}</span>
+              )}
+              {!isSidebarCollapsed && (nav.count ?? 0) > 0 && (
+                <span className="ml-auto bg-amber-100 text-amber-800 py-0.5 px-2 rounded-full text-xs shrink-0">
                   {nav.count}
                 </span>
               )}
@@ -178,12 +193,26 @@ const App = () => {
           <div className="flex gap-3">
             <button
               onClick={async () => {
-                const r = await chrome.runtime.sendMessage({
-                  type: 'reinspect',
-                  assessmentId: current.id,
-                });
-                if (r?.error) alert(r.error);
-                else location.href = `index.html?id=${r.id}`;
+                try {
+                  const granted = await new Promise((resolve) => {
+                    chrome.permissions.request(
+                      { origins: ['http://*/*', 'https://*/*'] },
+                      (granted: boolean) => resolve(granted)
+                    );
+                  });
+                  if (!granted) {
+                    alert('Re-inspecting from the dashboard requires background permissions. Please go to the website tab and click the SiteLens icon instead.');
+                    return;
+                  }
+                  const r = await chrome.runtime.sendMessage({
+                    type: 'reinspect',
+                    assessmentId: current.id,
+                  });
+                  if (r?.error) alert(r.error);
+                  else location.href = `index.html?id=${r.id}`;
+                } catch (e: any) {
+                  alert(e.message || 'Failed to request permissions.');
+                }
               }}
               className="flex items-center gap-2 bg-white border border-slate-200 text-slate-700 px-4 py-2 rounded-md hover:bg-slate-50 transition-colors shadow-sm text-sm font-medium"
             >

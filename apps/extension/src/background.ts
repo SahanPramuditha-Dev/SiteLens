@@ -336,7 +336,7 @@ async function inspect(
       const runtime = result[0]?.result;
       if (
         runtime &&
-        runtime.timeOrigin === page.timeOrigin &&
+        Math.abs(runtime.timeOrigin - page.timeOrigin) < 1000 &&
         (await hashUrl(runtime.url)) === (await hashUrl(page.url))
       )
         page.indicators.push(...runtime.technologies);
@@ -878,3 +878,4 @@ chrome.runtime.onInstalled.addListener((details) => {
     }
   })().catch(() => {});
 });
+

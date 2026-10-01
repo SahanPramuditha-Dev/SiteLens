@@ -75,5 +75,14 @@ export function collectRuntimeTechnologies() {
       }
     }
   } catch {}
-  return { url: location.href, timeOrigin: performance.timeOrigin, technologies };
+  let windowKeys: string[] = [];
+  try {
+    windowKeys = Object.getOwnPropertyNames(window).slice(0, 5000);
+  } catch {}
+  return { 
+    url: location.href, 
+    timeOrigin: performance.timeOrigin, 
+    technologies,
+    windowKeys
+  };
 }

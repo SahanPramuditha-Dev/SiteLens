@@ -257,13 +257,15 @@ export function freshness(
   currentDocumentId: string | undefined,
   currentTargetKey: string | undefined
 ) {
-  return a.importedAt || a.reproducibility?.reevaluatedFrom || a.supplemental
+    return a.importedAt || a.reproducibility?.reevaluatedFrom || a.supplemental
     ? 'older assessment'
-    : !binding || !currentDocumentId
+    : !binding
       ? 'unavailable'
-      : a.targetKey !== currentTargetKey || binding.documentId !== currentDocumentId
+      : currentTargetKey && a.targetKey !== currentTargetKey
         ? 'page changed'
-        : 'current';
+        : currentDocumentId && binding.documentId !== currentDocumentId
+          ? 'page changed'
+          : (!currentDocumentId && !currentTargetKey) ? 'current' : 'current';
 }
 export async function scopedText(
   url: string,
@@ -334,3 +336,4 @@ export async function scopedText(
   }
   throw new Error('Redirect limit exceeded.');
 }
+

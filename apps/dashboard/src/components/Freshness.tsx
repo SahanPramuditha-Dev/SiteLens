@@ -33,8 +33,9 @@ export function FreshnessIndicator({ id }: { id: string }) {
             ? 'The original page navigated or reloaded. Re-inspect before investigating or verifying changes.'
             : data.status === 'older assessment'
               ? 'This is imported, supplemented or re-evaluated evidence. Its original scope and collection times are retained.'
-              : 'Original document cannot be checked. Open the website and create a new assessment.'}
+              : 'The original tab is either closed or cannot be verified without persistent permissions. Assessment data is still fully valid.'}
       </p>
     </div>
   );
 }
+
