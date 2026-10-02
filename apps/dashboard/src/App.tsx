@@ -59,6 +59,13 @@ const App = () => {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   useEffect(() => {
+    const scrollContainer = document.getElementById('main-scroll');
+    if (scrollContainer) {
+      scrollContainer.scrollTop = 0;
+    }
+  }, [view]);
+
+  useEffect(() => {
     if (typeof chrome !== 'undefined' && chrome.runtime?.sendMessage) {
       chrome.runtime.sendMessage({ type: 'state' }, (res: any) => {
         if (res && res.assessments) {
@@ -218,21 +225,24 @@ const App = () => {
             >
               <RefreshCw className="h-4 w-4" /> Re-inspect
             </button>
-            <button
-              className="flex items-center gap-2 bg-emerald-600 text-white px-4 py-2 rounded-md hover:bg-emerald-700 transition-colors shadow-sm text-sm font-medium"
-              onClick={() =>
-                chrome.tabs?.create({ url: chrome.runtime.getURL(`report.html?id=${current.id}`) })
-              }
-            >
-              <Download className="h-4 w-4" /> Export Report
-            </button>
-
-            <button
-              className="flex items-center gap-2 bg-slate-100 text-slate-700 px-4 py-2 rounded-md hover:bg-slate-200 transition-colors shadow-sm text-sm font-medium"
-              onClick={handleExportJson}
-            >
-              <Download className="h-4 w-4" /> Export JSON
-            </button>
+            <div className="relative">
+              <select
+                className="appearance-none flex items-center gap-2 bg-emerald-600 text-white pl-4 pr-9 py-2 rounded-md hover:bg-emerald-700 transition-colors shadow-sm text-sm font-medium cursor-pointer"
+                value=""
+                onChange={async (e) => {
+                  const v = e.target.value;
+                  if (v === 'json') handleExportJson();
+                  if (v === 'pdf') { const { exportToPdf } = await import('./lib/export'); exportToPdf(current); }
+                  if (v === 'sarif') { const { exportToSarif } = await import('./lib/export'); exportToSarif(current); }
+                }}
+              >
+                <option value="" disabled>Export...</option>
+                <option value="json" className="bg-white text-slate-900">Export JSON</option>
+                <option value="pdf" className="bg-white text-slate-900">Export PDF</option>
+                <option value="sarif" className="bg-white text-slate-900">Export SARIF</option>
+              </select>
+              <Download className="h-4 w-4 absolute right-3 top-2.5 text-white pointer-events-none" />
+            </div>
             <div className="flex items-center gap-2.5 pl-2 ml-1 border-l border-slate-200">
               <button
                 role="switch"
@@ -255,7 +265,7 @@ const App = () => {
           </div>
         </header>
 
-        <div className="flex-1 overflow-y-auto p-4 md:p-8">
+        <div id="main-scroll" className="flex-1 overflow-y-auto p-4 md:p-8 scroll-smooth">
           <div className="max-w-6xl mx-auto">
             <FreshnessIndicator id={current.id} />
             {view === 'tools' && <DeveloperTools assessment={current} />}
