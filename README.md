@@ -1,5 +1,9 @@
 # SiteLens 🔍
 
+[![Build Status](https://github.com/SahanPramuditha-Dev/SiteLens/actions/workflows/ci.yml/badge.svg)](https://github.com/SahanPramuditha-Dev/SiteLens/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Release](https://img.shields.io/github/v/release/SahanPramuditha-Dev/SiteLens?include_prereleases)](https://github.com/SahanPramuditha-Dev/SiteLens/releases)
+
 > Evidence-first, passive website security inspector & local assessment workspace for Chromium.
 
 SiteLens is a Chromium Manifest V3 extension and local assessment workspace. It records browser-visible observations, confidence, evidence provenance, coverage, and limitations. **It never produces a security score or certifies an application as secure.**

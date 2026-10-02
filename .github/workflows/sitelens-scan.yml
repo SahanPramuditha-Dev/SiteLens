@@ -1,0 +1,32 @@
+name: SiteLens Security Scan
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  sitelens-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # E.g. start your staging server here
+      # - name: Start staging server
+      #   run: npm run start &
+      #   env:
+      #     PORT: 3000
+      
+      - name: Run SiteLens Scan
+        uses: ./ # Points to the action.yml in the root
+        with:
+          url: 'http://localhost:3000' # Replace with your staging URL
+          policy: 'apps/cli/sitelens.policy.example.yml'
+          sarif: 'sitelens-results.sarif'
+          
+      - name: Upload SARIF to GitHub Security Alerts
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: sitelens-results.sarif
