@@ -1,0 +1,22 @@
+name: 'SiteLens Security Scan'
+description: 'Run SiteLens Policy-as-Code client-side security checks on your deployment'
+inputs:
+  url:
+    description: 'The URL to scan (e.g. https://staging.example.com)'
+    required: true
+  policy:
+    description: 'Path to a sitelens.policy.yml file'
+    required: false
+  sarif:
+    description: 'Output SARIF file path for GitHub Security Alerts'
+    required: false
+    default: 'sitelens-results.sarif'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.url }}
+    - '--policy'
+    - ${{ inputs.policy }}
+    - '--sarif'
+    - ${{ inputs.sarif }}

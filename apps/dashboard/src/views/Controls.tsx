@@ -14,7 +14,8 @@ export function ControlsView({ assessment }: { assessment: Assessment }) {
       observedOrigins: [],
     }),
     [scope, setScope] = useState<Scope>(assessment.scope || defaultScope(assessment.url)),
-    [notice, setNotice] = useState('');
+    [notice, setNotice] = useState(''),
+    [headers, setHeaders] = useState<{name: string; value: string; domain: string}[]>([]);
   useEffect(() => {
     call({ type: 'state' })
       .then((s) => {
@@ -22,9 +23,23 @@ export function ControlsView({ assessment }: { assessment: Assessment }) {
         setScope(
           s.settings.scopes?.[assessment.origin] || assessment.scope || defaultScope(assessment.url)
         );
+
+        setHeaders(s.settings.customHeaders || []);
+
       })
       .catch((e) => setNotice(e.message));
   }, [assessment.id]);
+  
+    const saveHeaders = async (newHeaders: {name: string; value: string; domain: string}[]) => {
+      setHeaders(newHeaders);
+      try {
+        await call({ type: 'settings', customHeaders: newHeaders });
+        setNotice('Custom headers saved.');
+      } catch (e: any) {
+        setNotice(e.message);
+      }
+    };
+
   const run = async (message: Record<string, unknown>) => {
     try {
       const result = await call(message);
@@ -419,6 +434,28 @@ export function ControlsView({ assessment }: { assessment: Assessment }) {
           Delete this assessment
         </button>
       </section>
-    </div>
+    
+      <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6 mt-6">
+        <h3 className="font-semibold text-slate-800 flex items-center gap-2 mb-2">
+          Custom HTTP Headers & Auth
+        </h3>
+        <p className="text-sm text-slate-500 mb-4">
+          Inject custom headers (like <code>Authorization: Bearer ...</code>) to scan staging environments or protected APIs.
+        </p>
+        
+        <div className="space-y-3">
+          {headers.map((h, i) => (
+            <div key={i} className="flex gap-2">
+              <input type="text" placeholder="Header Name" value={h.name} onChange={e => { const n = [...headers]; n[i].name = e.target.value; saveHeaders(n); }} className="border rounded px-3 py-1.5 text-sm flex-1" />
+              <input type="text" placeholder="Value" value={h.value} onChange={e => { const n = [...headers]; n[i].value = e.target.value; saveHeaders(n); }} className="border rounded px-3 py-1.5 text-sm flex-1" />
+              <button onClick={() => saveHeaders(headers.filter((_, idx) => idx !== i))} className="px-3 py-1.5 text-red-600 hover:bg-red-50 rounded">Remove</button>
+            </div>
+          ))}
+          <button onClick={() => saveHeaders([...headers, {name: '', value: '', domain: ''}])} className="px-4 py-2 bg-slate-100 text-slate-700 hover:bg-slate-200 rounded text-sm font-medium">
+            + Add Header
+          </button>
+        </div>
+      </div>
+</div>
   );
 }

@@ -248,6 +248,7 @@ export interface Settings {
   learningMode: boolean;
   retention: number;
   observedOrigins: string[];
+  customHeaders?: { name: string; value: string; domain: string }[];
 }
 
 export type ProvenanceSource =

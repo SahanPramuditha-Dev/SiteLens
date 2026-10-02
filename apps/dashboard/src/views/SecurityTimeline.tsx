@@ -1,6 +1,7 @@
 import { GitCommit, CheckCircle2, AlertCircle, Info, Clock } from 'lucide-react';
 import type { Assessment } from '@sitelens/shared-types';
 import { compareAssessments } from '@sitelens/extension/src/core/history';
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 
 function formatDate(iso: string): string {
   return new Date(iso)
@@ -44,8 +45,32 @@ export const SecurityTimelineView = ({
     );
   }
 
+  const chartData = history.map(a => ({
+    name: new Date(a.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }),
+    protections: getProtectionCount(a),
+    weaknesses: getWeaknessCount(a)
+  }));
+
   return (
     <div className="space-y-5">
+      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden p-6">
+        <h3 className="font-semibold text-slate-800 mb-4">Trend Over Time</h3>
+        <div className="h-64 w-full">
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={chartData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+              <XAxis dataKey="name" stroke="#94a3b8" fontSize={12} tickLine={false} axisLine={false} />
+              <YAxis stroke="#94a3b8" fontSize={12} tickLine={false} axisLine={false} />
+              <Tooltip 
+                contentStyle={{ borderRadius: '8px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+              />
+              <Line type="monotone" dataKey="protections" stroke="#10b981" strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 6 }} name="Protections" />
+              <Line type="monotone" dataKey="weaknesses" stroke="#f59e0b" strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 6 }} name="Weaknesses" />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+
       <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
         <div className="px-6 py-5 border-b border-slate-100 bg-slate-50/50 flex items-center gap-3">
           <GitCommit className="h-5 w-5 text-slate-500" />

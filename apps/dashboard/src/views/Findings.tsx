@@ -1,3 +1,5 @@
+import { GlossaryText } from '../components/GlossaryText';
+import { REMEDIATIONS } from '../lib/remediations';
 import { FIX_RECIPES } from '@sitelens/assessment-engine/src/workspace.js';
 declare var chrome: any;
 import { Dropdown } from '../components/Dropdown';
@@ -177,7 +179,26 @@ export const Findings = ({
                       <strong className="block text-xs uppercase tracking-wide text-slate-500 mb-1">
                         Observation
                       </strong>
-                      <p className="text-slate-700">{f.observation}</p>
+                      <p className="text-slate-700"><GlossaryText text={f.observation} /></p>
+
+                    {REMEDIATIONS[f.checkId] && (
+                      <div className="mt-4 pt-4 border-t border-slate-100">
+                        <h4 className="text-sm font-semibold text-slate-700 mb-2">How to Fix (Remediation)</h4>
+                        <div className="space-y-3">
+                          {REMEDIATIONS[f.checkId].map((rem, i) => (
+                            <div key={i} className="bg-slate-50 rounded-lg border border-slate-200 overflow-hidden">
+                              <div className="px-3 py-1.5 bg-slate-100 border-b border-slate-200 text-xs font-semibold text-slate-600">
+                                {rem.framework}
+                              </div>
+                              <pre className="p-3 text-xs text-slate-800 overflow-x-auto whitespace-pre-wrap">
+                                <code>{rem.code}</code>
+                              </pre>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
                     </div>
                     {!isProfessionalMode && f.impact && (
                       <div>

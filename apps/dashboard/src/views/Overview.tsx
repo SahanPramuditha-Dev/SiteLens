@@ -13,6 +13,7 @@ import {
   GitCompare,
   Info,
   X,
+  Shield
 } from 'lucide-react';
 import type { Assessment, Coverage, Finding } from '@sitelens/shared-types';
 import { compareAssessments } from '@sitelens/extension/src/core/history';
@@ -127,6 +128,29 @@ export const Overview = ({ assessment, allAssessments, setView }: Props) => {
   const observations = assessment.findings.filter((f) => f.status === 'informational');
   const unable = assessment.findings.filter((f) => f.status === 'unable_to_assess');
 
+
+  // Calculate Grade
+  const calculateScore = () => {
+    let score = 100;
+    weaknesses.forEach(w => {
+      if (w.severity === 'critical') score -= 20;
+      else if (w.severity === 'high') score -= 10;
+      else if (w.severity === 'medium') score -= 5;
+      else if (w.severity === 'low') score -= 1;
+    });
+    return Math.max(0, score);
+  };
+  
+  const score = calculateScore();
+  const grade = score >= 90 ? 'A' : score >= 80 ? 'B' : score >= 70 ? 'C' : score >= 60 ? 'D' : 'F';
+  const gradeColor = score >= 90 ? 'text-emerald-500' : score >= 80 ? 'text-blue-500' : score >= 70 ? 'text-amber-500' : 'text-red-500';
+
+  // Triage Mode (Top 3 Fixes)
+  const topFixes = [...weaknesses].sort((a, b) => {
+    const s = { critical: 4, high: 3, medium: 2, low: 1, informational: 0 };
+    return (s[b.severity as keyof typeof s] || 0) - (s[a.severity as keyof typeof s] || 0);
+  }).slice(0, 3);
+
   // Priority findings – sorted by severity then confidence
   const severityRank: Record<string, number> = {
     critical: 5,
@@ -219,6 +243,54 @@ export const Overview = ({ assessment, allAssessments, setView }: Props) => {
 
   return (
     <div className="space-y-5">
+
+      {/* Beginner Friendly Hero */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
+        <div className="md:col-span-1 bg-white rounded-xl border border-slate-200 shadow-sm p-6 flex flex-col items-center justify-center">
+          <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-2">Security Grade</h3>
+          <div className={`text-7xl font-bold ${gradeColor}`}>{grade}</div>
+          <p className="text-slate-400 mt-2 text-sm font-medium">Health Score: {score}/100</p>
+        </div>
+        
+        <div className="md:col-span-2 bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+          <h3 className="text-sm font-semibold text-slate-800 uppercase tracking-wider mb-4 border-b pb-2">Top Priorities (Start Here)</h3>
+          {topFixes.length === 0 ? (
+            <div className="flex items-center gap-3 text-emerald-600 font-semibold h-full py-4">
+              <CheckCircle2 className="h-6 w-6" />
+              Awesome job! No high-priority weaknesses detected.
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {topFixes.map(f => (
+                <div key={f.checkId} className="flex gap-3 items-start cursor-pointer group" onClick={() => setView('findings')}>
+                  <AlertCircle className={`h-5 w-5 mt-0.5 ${f.severity === 'critical' ? 'text-red-500' : f.severity === 'high' ? 'text-orange-500' : 'text-amber-500'}`} />
+                  <div>
+                    <h4 className="text-sm font-bold text-slate-800 group-hover:text-indigo-600 transition-colors">{f.title}</h4>
+                    <p className="text-xs text-slate-500 mt-0.5 line-clamp-1">{f.observation}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+      
+      {/* Good Job View */}
+      {protections.length > 0 && (
+        <div className="bg-emerald-50 rounded-xl border border-emerald-100 shadow-sm p-6 mb-6">
+          <h3 className="text-sm font-semibold text-emerald-800 uppercase tracking-wider mb-3 flex items-center gap-2">
+            <Shield className="h-5 w-5" /> What You're Doing Right
+          </h3>
+          <div className="flex flex-wrap gap-2">
+            {protections.map(f => (
+              <span key={f.checkId} className="px-3 py-1 bg-white border border-emerald-200 text-emerald-700 text-xs font-medium rounded-full shadow-sm">
+                {f.title}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* ── 1. Assessment Identity Bar ──────────────────────────────── */}
       <div className="bg-white rounded-xl border border-slate-200 shadow-sm px-6 py-4">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
