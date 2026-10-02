@@ -232,8 +232,8 @@ const App = () => {
                 onChange={async (e) => {
                   const v = e.target.value;
                   if (v === 'json') handleExportJson();
-                  if (v === 'pdf') { const { exportToPdf } = await import('./lib/export'); exportToPdf(current); }
-                  if (v === 'sarif') { const { exportToSarif } = await import('./lib/export'); exportToSarif(current); }
+                  if (v === 'pdf') { const { exportToPdf } = await import('./lib/export.ts'); exportToPdf(current); }
+                  if (v === 'sarif') { const { exportToSarif } = await import('./lib/export.ts'); exportToSarif(current); }
                 }}
               >
                 <option value="" disabled>Export...</option>
